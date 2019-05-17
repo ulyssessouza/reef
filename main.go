@@ -35,5 +35,5 @@ func main() {
 	})
 }
 
-func nuke(_ *cobra.Command, _ []string) {
+func reef(_ *cobra.Command, _ []string) {
 }
