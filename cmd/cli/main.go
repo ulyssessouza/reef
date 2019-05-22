@@ -9,16 +9,17 @@ import (
 
 const MinimalAPIVersion = "1.12"
 
+var rootCmd = &cobra.Command{
+	Short: "Docker Reef",
+	Long:  `A tool to install docker cli plugins.`,
+	Use:   "reef",
+	Run:   reef,
+}
+
 func main() {
 	plugin.Run(func(_ command.Cli) *cobra.Command {
-		cmd := &cobra.Command{
-			Short: "Docker Reef",
-			Long:  `A tool to install docker cli plugins.`,
-			Use:   "reef",
-			Run:   reef,
-		}
-		originalPreRun := cmd.PersistentPreRunE
-		cmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
+		originalPreRun := rootCmd.PersistentPreRunE
+		rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 			if err := plugin.PersistentPreRunE(cmd, args); err != nil {
 				return err
 			}
@@ -27,7 +28,7 @@ func main() {
 			}
 			return nil
 		}
-		return cmd
+		return rootCmd
 	}, manager.Metadata{
 		SchemaVersion: "0.1.0",
 		Vendor:        "Ulysses Souza",

@@ -1,11 +1,10 @@
 PLUGIN_NAME=reef
 
 GO_FLAGS=CGO_ENABLED=0
-GO_BUILD=$(GO_FLAGS) go build
 OUTPUT=docker-$(PLUGIN_NAME)
 
 build:
-	$(GO_BUILD) -o $(OUTPUT)
+	$(GO_FLAGS) go build -o $(OUTPUT) cmd/cli/*.go
 
 mktargetdir:
 	mkdir -p ~/.docker/cli-plugins
